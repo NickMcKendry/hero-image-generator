@@ -1,6 +1,25 @@
 import React, { Component } from 'react';
 import './App.css';
-import { getRandomPhoto } from './requests'
+import { getRandomPhoto } from './requests';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+
+const ItemTypes = {
+  MESSAGE: 'message'
+}
+
+const messageSource = {
+  beginDrag(props){
+    return{}
+  }
+}
+
+function collect(connect, monitor){
+  return {
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging()
+  }
+}
 
 export default class App extends Component {
   constructor(){
@@ -12,6 +31,8 @@ export default class App extends Component {
       inputValue: 'Write A Message'
     }
   }
+
+
 
    getPhoto = () => {
     let randomPhoto = getRandomPhoto();
@@ -45,8 +66,7 @@ export default class App extends Component {
 
 
   render() {
-
-
+    
     return (
       <div style={{
         height: "100vh",
@@ -69,8 +89,6 @@ export default class App extends Component {
             minHeight: '0.1em',
           }}>{this.state.inputValue}</h1>
         </div>
-
-
         <div className="text-center" style={{
           position: 'absolute',
           zIndex: 1,
