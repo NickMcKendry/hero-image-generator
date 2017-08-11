@@ -1,25 +1,12 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import './App.css';
 import { getRandomPhoto } from './requests';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import dragula from 'react-dragula';
+import { HuePicker, AlphaPicker } from 'react-color'
 
-const ItemTypes = {
-  MESSAGE: 'message'
-}
-
-const messageSource = {
-  beginDrag(props){
-    return{}
-  }
-}
-
-function collect(connect, monitor){
-  return {
-    connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging()
-  }
-}
 
 export default class App extends Component {
   constructor(){
@@ -28,7 +15,9 @@ export default class App extends Component {
       image: '',
       author: '',
       authorUrl: '',
-      inputValue: 'Write A Message'
+      inputValue: 'Write A Message',
+      textColor: '#fff',
+      highlightColor: 'none'
     }
   }
 
@@ -60,13 +49,29 @@ export default class App extends Component {
    this.setState({ inputValue: e.target.value })
  }
 
+ updateTextColor = (color) => {
+   this.setState({ textColor: color.hex })
+   console.log(color);
+ }
+
+ updateHighlightColor = (color) => {
+   this.setState({ highlightColor: color.hex })
+   console.log(color);
+ }
+
+ componentDidMount(){
+   const message = ReactDOM.findDOMNode(this);
+   let options = { copy: true }
+   dragula(message);
+ }
+
   async componentWillMount(){
     await this.getPhoto()
   }
 
 
   render() {
-    
+
     return (
       <div style={{
         height: "100vh",
@@ -81,12 +86,16 @@ export default class App extends Component {
           resizeMode: "cover",
 
         }} />
-        <div style={{
+        <div
+          className="message"
+          style={{
           position: "absolute",
           alignSelf: "center"
         }}>
           <h1 style={{
             minHeight: '0.1em',
+            color: this.state.textColor,
+            backgroundColor: this.state.highlightColor
           }}>{this.state.inputValue}</h1>
         </div>
         <div className="text-center" style={{
@@ -106,11 +115,16 @@ export default class App extends Component {
               onChange={e => this.updateInputValue(e)}
 
               /><br />
-            <input type="submit" className="btn btn-success center"
-              style={{
-                marginLeft: 1
-              }}
-             />
+              <h4>Text Color</h4>
+              <HuePicker
+                color={ this.state.textColor }
+                onChange={ this.updateTextColor }
+              /> <br />
+              <h4>HighLight</h4>
+              <HuePicker
+                color={ this.state.highlightColor }
+                onChange={ this.updateHighlightColor }
+              />
           </form>
         </div>
         <div style={{

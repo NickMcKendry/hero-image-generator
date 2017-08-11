@@ -5,10 +5,13 @@
   "dependencies": {
     "axios": "^0.16.2",
     "react": "^15.6.1",
+    "react-color": "^2.13.4",
+    "react-color-picker": "^4.0.2",
     "react-dnd": "^2.4.0",
     "react-dnd-html5-backend": "^2.4.1",
     "react-dom": "^15.6.1",
     "react-draggable": "^2.2.6",
+    "react-dragula": "^1.1.17",
     "react-scripts": "1.0.10"
   },
   "scripts": {
