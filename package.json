@@ -1,6 +1,5 @@
 {
   "name": "hero-image",
-  "homepage" : "http://myname.github.io/hero-gen",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

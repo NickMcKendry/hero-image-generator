@@ -13,6 +13,7 @@ export default class App extends Component {
       image: '',
       author: '',
       authorUrl: '',
+      preview: false
     }
   }
 
@@ -60,7 +61,7 @@ export default class App extends Component {
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat'
       }}>
-      <Input />
+      <Input/>
         <div
           className="text-center"
           style={{
@@ -87,6 +88,9 @@ export default class App extends Component {
         }}>
           <button onClick={this.newPhoto} className="btn btn-info" >Different Photo</button>
         </div>
+
+        
+
 
       </div>
     );

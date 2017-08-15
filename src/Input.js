@@ -11,7 +11,8 @@ export default class Input extends Component {
       textColor: '',
       highlightColor: '',
       textPicker: false,
-      highlightPicker: false
+      highlightPicker: false,
+      preview: true
     }
   }
 
@@ -45,6 +46,14 @@ export default class Input extends Component {
      }
   }
 
+  togglePreview = () => {
+    if(this.state.preview === false){
+      this.setState({ preview: true })
+    } else {
+      this.setState({ preview: false })
+    }
+  }
+
   render(){
     return (
       <div className="text-center"
@@ -69,6 +78,12 @@ export default class Input extends Component {
             backgroundColor: this.state.highlightColor
           }}>{this.state.inputValue}</h1>
         </Rnd>
+        {this.state.preview ? null :
+        <h4 onClick={this.togglePreview} style={{
+          cursor: 'pointer'
+        }}>X</h4>
+      }
+        {this.state.preview ?
         <div className="col-md-7 text-center"
             style={{
               alignSelf: 'center',
@@ -90,10 +105,13 @@ export default class Input extends Component {
             }}
           />
         </div>
+        : null }
+
         <div className="text-color" style={{
           height: 287,
           marginRight: 10
         }}>
+        {this.state.preview ?
           <h4
             onClick={this.toggleTextColor}
             style={{
@@ -101,7 +119,8 @@ export default class Input extends Component {
             }}
             >
               Text Color
-          </h4>
+          </h4> : null }
+
           {this.state.textPicker ?
           <ChromePicker
             color={ this.state.textColor }
@@ -111,9 +130,11 @@ export default class Input extends Component {
           />
         : null}
         </div>
+
         <div className="highlight-color" style={{
           height: 287
         }}>
+        {this.state.preview ?
           <h4
             onClick={this.toggleHighlightColor}
             style={{
@@ -122,6 +143,7 @@ export default class Input extends Component {
             >
             HighLight
           </h4>
+          : null }
           {this.state.highlightPicker ?
           <ChromePicker
             color={ this.state.highlightColor }
@@ -131,6 +153,17 @@ export default class Input extends Component {
           />
         : null}
         </div>
+        {this.state.preview ?
+        <div style={{
+          marginTop: '51%',
+          position: 'absolute',
+          left: 10
+        }}>
+          <button className="btn-sm btn-success" onClick={this.togglePreview}>
+            Preview
+          </button>
+        </div>
+      : null }
       </div>
     )
   }
