@@ -12,12 +12,18 @@ export default class Input extends Component {
       highlightColor: '',
       textPicker: false,
       highlightPicker: false,
-      preview: true
+      preview: true,
+      textSize: '5',
+      textSizePicker: false
     }
   }
 
   updateInputValue = (e) => {
     this.setState({ inputValue: e.target.value })
+  }
+
+  updateTextSize = (e) => {
+    this.setState({ textSize: e.target.value })
   }
 
   updateTextColor = (color) => {
@@ -44,6 +50,14 @@ export default class Input extends Component {
      } else {
        this.setState({ highlightPicker: false })
      }
+  }
+
+  toggleTextSize = () => {
+    if(this.state.textSizePicker === false){
+      this.setState({ textSizePicker: true })
+    } else {
+      this.setState({ textSizePicker: false })
+    }
   }
 
   togglePreview = () => {
@@ -73,7 +87,7 @@ export default class Input extends Component {
           <h1
             style={{
             minHeight: '0.1em',
-            fontSize: 'auto',
+            fontSize: `${this.state.textSize}em`,
             color: this.state.textColor,
             backgroundColor: this.state.highlightColor
           }}>{this.state.inputValue}</h1>
@@ -132,7 +146,8 @@ export default class Input extends Component {
         </div>
 
         <div className="highlight-color" style={{
-          height: 287
+          height: 287,
+          marginRight: 20
         }}>
         {this.state.preview ?
           <h4
@@ -152,6 +167,28 @@ export default class Input extends Component {
 
           />
         : null}
+
+
+        </div>
+        <div>
+          {this.state.preview ?
+          <h4
+            onClick={this.toggleTextSize}
+            style={{
+              cursor: 'pointer'
+            }}
+            >
+            Font Size
+          </h4>
+          : null}
+          {this.state.textSizePicker ?
+          <input
+            type="text"
+            value={`${this.state.textSize}`}
+            onChange={e => this.updateTextSize(e)}
+            className="form-control"
+          />
+          : null}
         </div>
         {this.state.preview ?
         <div style={{
@@ -164,7 +201,6 @@ export default class Input extends Component {
           </button>
         </div>
       : null }
-      
       </div>
     )
   }
